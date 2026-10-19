@@ -1,9 +1,15 @@
 # Controllers-OFF
 
+**Русский** · [English](README.en.md)
+
 > Данное приложение было создано с целью облегчить себе жизнь при игре в **DaggerFall Online**. 
 Когда к ПК подключен любой контроллер, который имеет при себе потенциометры, в **DFO** появляется фантомный курсор.
 Такая проблема присутствует не только в браузерной версии, но и в десктопной. 
 Мне надоело лезть под стол и отключать свой руль, поэтому я сделал данное приложение. 
+
+## Скриншот
+
+![Панель ControllersOff](docs/screenshot.png)
 
 ## Что умеет
 
@@ -38,3 +44,7 @@ dotnet publish src/ControllersOff/ControllersOff.csproj -p:PublishProfile=win-x6
 ```
 
 Готовый exe появится в `artifacts/portable`. Профиль `win-x64` собирает single-file framework-dependent сборку; для полностью автономной версии задать `SelfContained=true`.
+
+## Лицензия
+
+GPL v3
