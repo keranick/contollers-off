@@ -1,0 +1,9 @@
+ТЗ.txt
+bin/
+obj/
+.vs/
+*.user
+TestResults/
+artifacts/
+publish/
+*.nupkg

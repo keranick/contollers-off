@@ -1,0 +1,123 @@
+<Window x:Class="ControllersOff.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+        xmlns:loc="clr-namespace:ControllersOff"
+        xmlns:views="clr-namespace:ControllersOff.Views"
+        Title="{Binding [AppTitle], Source={x:Static loc:Loc.Instance}}"
+        Width="340" Height="520"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True"
+        WindowStartupLocation="Manual"
+        Deactivated="OnDeactivated" Activated="OnActivated" PreviewKeyDown="OnPreviewKeyDown"
+        Foreground="{DynamicResource TextFillColorPrimaryBrush}">
+
+    <Border Margin="12" CornerRadius="12"
+            Background="{DynamicResource ApplicationBackgroundBrush}"
+            BorderBrush="{DynamicResource ControlStrokeColorDefaultBrush}"
+            BorderThickness="1">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="18" ShadowDepth="3" Opacity="0.35" Color="Black" />
+        </Border.Effect>
+
+        <Grid Margin="16,12,16,14">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="{Binding [AppTitle], Source={x:Static loc:Loc.Instance}}"
+                           Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                           FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center" />
+                <ui:Button Grid.Column="1" Appearance="Transparent" Padding="6" Width="32" Height="32"
+                           ToolTip="{Binding [Settings], Source={x:Static loc:Loc.Instance}}"
+                           Click="OnSettingsClick">
+                    <ui:SymbolIcon Symbol="Settings24" FontSize="16" />
+                </ui:Button>
+            </Grid>
+
+            <TextBlock Grid.Row="1" x:Name="StatusText" Margin="0,2,0,0"
+                       FontSize="12"
+                       Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+
+            <Grid Grid.Row="2" Margin="0,10,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <ui:Button Grid.Column="0" x:Name="KeepButton" Margin="0,0,4,0" Padding="8,6" FontSize="12"
+                           Appearance="Secondary"
+                           Content="{Binding [KeepKeyboardAndMouse], Source={x:Static loc:Loc.Instance}}"
+                           Click="OnKeepKeyboardAndMouseClick" />
+                <ui:Button Grid.Column="1" Margin="4,0,0,0" Padding="8,6" FontSize="12"
+                           Appearance="Secondary"
+                           Content="{Binding [RestoreInitialState], Source={x:Static loc:Loc.Instance}}"
+                           Click="OnRestoreClick" />
+            </Grid>
+
+            <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <TextBlock x:Name="EmptyText"
+                               Visibility="Collapsed" Margin="0,32,0,0"
+                               HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"
+                               Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                               Text="{Binding [NoDevices], Source={x:Static loc:Loc.Instance}}" />
+
+                    <ItemsControl x:Name="GroupsControl">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type views:DeviceGroupView}">
+                                <StackPanel Margin="0,0,0,12">
+                                    <TextBlock Text="{Binding Title}" Margin="2,0,0,6"
+                                               FontSize="11" FontWeight="SemiBold"
+                                               Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                                    <ItemsControl ItemsSource="{Binding Devices}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate DataType="{x:Type views:DeviceRow}">
+                                                <Border Margin="0,0,0,4" Padding="10,6" CornerRadius="6"
+                                                        Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+                                                        BorderBrush="{DynamicResource ControlStrokeColorDefaultBrush}"
+                                                        BorderThickness="1">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                        </Grid.ColumnDefinitions>
+
+                                                        <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="0,0,8,0">
+                                                            <TextBlock Text="{Binding Name}"
+                                                                       FontSize="12" TextTrimming="CharacterEllipsis"
+                                                                       Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
+                                                            <TextBlock Text="{Binding Details}" Margin="0,1,0,0"
+                                                                       FontSize="10" TextTrimming="CharacterEllipsis"
+                                                                       Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                                                        </StackPanel>
+
+                                                        <ui:ToggleSwitch Grid.Column="1" VerticalAlignment="Center"
+                                                                         OnContent="{Binding [SwitchOn], Source={x:Static loc:Loc.Instance}}"
+                                                                         OffContent="{Binding [SwitchOff], Source={x:Static loc:Loc.Instance}}"
+                                                                         IsChecked="{Binding IsEnabled, Mode=OneWay}"
+                                                                         Checked="OnSwitchChecked"
+                                                                         Unchecked="OnSwitchUnchecked" />
+                                                    </Grid>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+    </Border>
+</Window>
