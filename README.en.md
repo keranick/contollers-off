@@ -44,7 +44,3 @@ dotnet publish src/ControllersOff/ControllersOff.csproj -p:PublishProfile=win-x6
 ```
 
 The ready exe lands in `artifacts/portable`. The `win-x64` profile produces a single-file framework-dependent build; set `SelfContained=true` for a fully standalone one.
-
-## License
-
-GPL v3
