@@ -25,12 +25,12 @@
 ## Требования
 
 - Windows 10/11 x64.
-- .NET 8 Desktop Runtime (портативная сборка framework-dependent, ~6 МБ).
+- Ничего доустанавливать не нужно: сборка self-contained, .NET внутри.
 
 ## Портативная версия
 
 1. Распаковать архив.
-2. Запустить `ControllersOff.exe`. Установка не нужна, настройки хранятся в `%LOCALAPPDATA%\ControllersOff`.
+2. Запустить `ControllersOff.exe` (~65 МБ, .NET не требуется). Установка не нужна, настройки хранятся в `%LOCALAPPDATA%\ControllersOff`.
 3. Приложение стартует в трее. Чтобы оно поднималось вместе с системой — включить автозагрузку в настройках.
 
 Диагностический лог пишется в `%LOCALAPPDATA%\ControllersOff\toggle.log`.
@@ -43,4 +43,4 @@ dotnet test  ControllersOff.sln
 dotnet publish src/ControllersOff/ControllersOff.csproj -p:PublishProfile=win-x64
 ```
 
-Готовый exe появится в `artifacts/portable`. Профиль `win-x64` собирает single-file framework-dependent сборку; для полностью автономной версии задать `SelfContained=true`.
+
