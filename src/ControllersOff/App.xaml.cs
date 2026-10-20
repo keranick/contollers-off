@@ -22,6 +22,15 @@ public partial class App : Application
     private MainWindow? _window;
     private AppSettings _settings = null!;
 
+    public App()
+    {
+        Trace.Write($"init v{typeof(App).Assembly.GetName().Version} path={Environment.ProcessPath}");
+
+        AppDomain.CurrentDomain.UnhandledException += (_, args) => Trace.Write($"fatal {args.ExceptionObject}");
+        DispatcherUnhandledException += (_, args) => Trace.Write($"dispatcher {args.Exception}");
+        TaskScheduler.UnobservedTaskException += (_, args) => Trace.Write($"task {args.Exception}");
+    }
+
     protected override void OnStartup(StartupEventArgs e)
     {
         // Commands must run before the single-instance check, otherwise the elevated helper never gets to work.
@@ -42,6 +51,8 @@ public partial class App : Application
         _ownsSingleInstance = true;
 
         base.OnStartup(e);
+
+        Trace.Write($"start v{typeof(App).Assembly.GetName().Version} path={Environment.ProcessPath}");
 
         _settings = SettingsStore.Load();
         Loc.Instance.UseLanguage(_settings.Language);

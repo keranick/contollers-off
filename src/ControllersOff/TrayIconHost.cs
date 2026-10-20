@@ -40,7 +40,12 @@ public sealed class TrayIconHost : IDisposable
     private static Icon LoadIcon()
     {
         var path = Path.Combine(AppContext.BaseDirectory, "Assets", "icon.ico");
-        return File.Exists(path) ? new Icon(path) : SystemIcons.Application;
+        if (File.Exists(path))
+        {
+            return new Icon(path);
+        }
+
+        return Icon.ExtractAssociatedIcon(Environment.ProcessPath ?? string.Empty) ?? SystemIcons.Application;
     }
 
     public void Dispose() => _notifyIcon.Dispose();
